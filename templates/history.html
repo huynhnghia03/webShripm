@@ -1,0 +1,366 @@
+{% extends "MainBase.html" %}
+{% block css %}<link rel="stylesheet"
+            href="{{ url_for('static', filename= '/css/mainBase.css') }}">
+<link rel="stylesheet"
+            href="{{ url_for('static', filename= '/css/history.css') }}">
+
+{% endblock %}
+
+{% block title %} History {% endblock %}
+{% block content %}
+<!-- Phần tiêu đề và tab -->
+<div>
+    <!-- Phần dữ liệu tôm gọi lên trả về script-->
+    <div
+        id="data-container"
+        data-total="{{ total }}"
+        data-big="{{ big }}"
+        data-medium="{{ medium }}"
+        data-small="{{ small }}"></div>
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a
+                class="nav-link active"
+                id="overview-tab"
+                data-toggle="tab"
+                href="#overview"
+                role="tab"
+                aria-controls="overview"
+                aria-selected="true"
+                ><i class="fa fa-pie-chart" aria-hidden="true"></i> Overview</a
+            >
+        </li>
+        <li class="nav-item">
+            <a
+                class="nav-link"
+                id="audiences-tab"
+                data-toggle="tab"
+                href="#audiences"
+                role="tab"
+                aria-selected="false"
+                >History</a
+            >
+        </li>
+    </ul>
+</div>
+<!--  -->
+
+<!-- Phần nội dung của tab -->
+<div class="tab-content">
+    <!-- Tab Overview -->
+      {% if sessions %}
+    <div
+        class="tab-pane fade show active"
+        id="overview"
+        role="tabpanel"
+        aria-labelledby="overview-tab">
+        <div style="margin-top: 50px; justify-items: center; margin-left: 50px">
+            <div class="row justify-content-center" >
+                <div class="col-sm-6">
+                    <div class="statistics-details d-flex align-items-center justify-content-between">
+
+                        <div>
+                            <p class="statistics-title">Total shrimp</p>
+                            <h6 class="rate-percentage">
+                                <strong>{{ total }}</strong>
+                            </h6>
+                        </div>
+                        <div>
+                            <p class="statistics-title">Big Shrimp</p>
+                            <h6 class="rate-percentage">
+                                <strong>{{ big }}</strong>
+                            </h6>
+                        </div>
+                        <div>
+                            <p class="statistics-title">Medium Shrimp</p>
+                            <h6 class="rate-percentage">
+                                <strong>{{medium}}</strong>
+                            </h6>
+                        </div>
+                        <div class="d-none d-md-block">
+                            <p class="statistics-title">Small Shrimp</p>
+                            <h6 class="rate-percentage">
+                                <strong>{{small}}</strong>
+                            </h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center custom-margin-top" style="margin-right: 0px; margin-left: 0px;">
+            <div class="col-sm-4">
+                <div id="piechart" style="    width: 1000px;
+    position: relative;
+    height: 100%;
+    right: 30%;
+"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tab History -->
+    <div
+        class="tab-pane fade"
+        id="audiences"
+        role="tabpanel"
+        aria-labelledby="audiences-tab">
+        <div class="history">
+            <div class="row justify-content-center">
+                <div class="history-container">
+
+                    {% for row in sessions %}
+                    <!-- Hiển thị thông tin từng phiên trong lịch sử -->
+                    <div class="history-details">
+                        <div class="row justify-content-center">
+                            <div class="col-sm-12">
+                                <div
+                                    class="statistics-details d-flex align-items-center justify-content-center">
+                                    <div class="history-id">
+                                        <p class="statistics-titles title">
+                                            ID
+                                        </p>
+                                        <p class="statistics-titles">
+                                            {{row[0]}}
+                                        </p>
+                                    </div>
+                                    <div class="history-image">
+                                        <img src="/static/yolov8/{{row[1]}}" />
+                                    </div>
+                                    <div class="history-info">
+                                        <p class="statistics-titles title">
+                                            Results
+                                        </p>
+                                        <p class="statistics-titles">
+                                            {{row[2]}}
+                  </p>
+                                    </div>
+                                    <div class="history-total">
+                                        <p class="statistics-titles title">
+                                            Total
+                                        </p>
+                                        <p class="statistics-titles">
+                                            {{row[3]}}
+                                        </p>
+                                    </div>
+                                    <div class="history-ctime">
+                                        <p class="statistics-titles title">
+                                            Time
+                                        </p>
+                                        <p class="statistics-titles">
+                                            {{row[4]}}
+                                        </p>
+                                    </div>
+                                    <button
+
+                                        class="statistics-titles details"
+                                        onclick="openModal('{{row[1]}}','{{row[2]}}', '{{row[3]}}','{{row[4]}}')"
+                                        >Details</button
+                                    >
+                                    <button
+
+                                        class="statistics-titles details"
+                                        onclick="deleteData('{{row[0]}}')"
+                                        >Delete</button
+                                    >
+                                    <div id="myModal" class="modal">
+                                        <span class="close">&times;</span>
+                                        <div class="model_con">
+                                            <img
+                                                src="/static/yolov8/{{row[1]}}"
+                                                class="modal-content"
+                                                id="img01" />
+                                            <div style="margin-left: 10px">
+                                                <p
+                                                    style="display: inline"
+                                                    class="statistics-titles title">
+                                                    Kind Shrimp:
+                                                </p>
+                                                <p
+                                                    style="display: inline"
+                                                    class="statistics-titles"
+                                                    id="results_text"></p>
+                                            </div>
+                                            <div style="margin-left: 10px">
+                                                <p
+                                                    style="display: inline"
+                                                    class="statistics-titles title">
+                                                    Total Shrimp:
+                                                </p>
+                                                <p
+                                                    style="display: inline"
+                                                    class="statistics-titles"
+                                                    id="total_text"></p>
+                                            </div>
+                                            <div style="margin-left: 10px">
+                                                <p
+                                                    style="display: inline"
+                                                    class="statistics-titles title">
+                                                    Time:
+                                                </p>
+                                                <p
+                                                    style="display: inline"
+                                                    class="statistics-titles"
+                                                    id="time_text"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="page" style="text-align: center;">
+            <a href="#">&laquo;</a>
+            <a href="#">1</a>
+            <a href="#" class="active">2</a>
+            <a href="#">3</a>
+            <a href="#">4</a>
+            <a href="#">5</a>
+            <a href="#">6</a>
+            <a href="#">&raquo;</a>
+        </div>
+
+    </div>
+     {% else %}
+    <div style = "text-align: center;">
+        <img class = "img_blank"src="/static/image/logo/icon_sad.png"/>
+        <p class = "text_blank">You have no history of shrimp identification!</p>
+        <p class = "text_blank">...</p>
+
+
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+<!-- Script để load google charts và vẽ biểu đồ -->
+{% block script %}
+<script
+    type="text/javascript"
+    src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+    var totalShrimp = document
+        .getElementById('data-container')
+        .getAttribute('data-total');
+    var totalBigShrimp = document
+        .getElementById('data-container')
+        .getAttribute('data-big');
+    var totalMediumShrimp = document
+        .getElementById('data-container')
+        .getAttribute('data-medium');
+    var totalSmallShrimp = document
+        .getElementById('data-container')
+        .getAttribute('data-small');
+
+    // -------------------
+    var ratioBigShrimp = totalBigShrimp / totalShrimp;
+    var ratioMediumShrimp = totalMediumShrimp / totalShrimp;
+    var ratioSmallShrimp = totalSmallShrimp / totalShrimp;
+    // Load google charts
+    google.charts.load('current', { packages: ['corechart'] });
+    google.charts.setOnLoadCallback(drawChart);
+
+    // Draw the chart and set the chart values
+    function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+            ['Task', 'Total shrimp'],
+            ['Big Shrimp', ratioBigShrimp],
+            ['Medium Shrimp', ratioMediumShrimp],
+            ['Small Shrimp', ratioSmallShrimp],
+        ]);
+
+        // Optional; add a title and set the width and height of the chart
+        var options = {
+            title: 'Pie chart of total shrimps',
+            titleTextStyle:{
+  fontSize: 30,
+  },
+  height:600,
+        };
+
+        // Display the chart inside the <div> element with id="piechart"
+        var chart = new google.visualization.PieChart(
+            document.getElementById('piechart')
+        );
+        chart.draw(data, options);
+    }
+
+    // xu ly xo anh
+    // Lấy các phần tử cần thiết
+    var modal = document.getElementById('myModal');
+    var span = document.getElementsByClassName('close')[0];
+
+    function openModal(imageSrc, rs, total, time) {
+        var modal = document.getElementById('myModal');
+        var modalImg = document.getElementById('img01');
+        var res = document.getElementById('results_text');
+        var tot = document.getElementById('total_text');
+        var timeText = document.getElementById('time_text');
+
+        modal.style.display = 'block';
+        modalImg.src = '/static/yolov8/' + imageSrc;
+        res.textContent = ' ' + rs;
+        tot.textContent = ' ' + total;
+        timeText.textContent = ' ' + time;
+    }
+
+    span.onclick = function () {
+        modal.style.display = 'none';
+    };
+
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = 'none';
+        }
+    };
+
+
+    function deleteData(id) {
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: "btn btn-success",
+                cancelButton: "btn btn-danger"
+            },
+            buttonsStyling: false
+            });
+            swalWithBootstrapButtons.fire({
+            title: `Delete saved ${id}! Are you sure?`,
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Yes, delete it!",
+            cancelButtonText: "No, cancel!",
+            reverseButtons: true
+            }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '/delete_data',
+                    type: 'POST',
+                    data: { id: id },
+                    success: function(response) {
+                        swalWithBootstrapButtons.fire({
+                            title: "Deleted!",
+                            text: "Your file has been deleted.",
+                            icon: "success"
+                        }).then(() => {
+                            location.reload();
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        swalWithBootstrapButtons.fire({
+                            title: "Error",
+                            text: "An error occurred while deleting the file.",
+                            icon: "error"
+                        });
+                    }
+                });
+            } else {
+            }
+        });
+    }
+
+
+</script>
+{% endblock %}
