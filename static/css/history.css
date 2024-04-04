@@ -57,7 +57,6 @@ td {
     font-weight: 600;
 }
 
-
 .pagination {
     display: inline-block;
 }
@@ -139,9 +138,10 @@ td {
     width: 100px;
     margin-top: 10%;
 }
-.row{
-margin-right: 0px;
-margin-left: 0px;}
+.row {
+    margin-right: 0px;
+    margin-left: 0px;
+}
 
 .statistics-title {
     color: #1a1919;
@@ -149,23 +149,29 @@ margin-left: 0px;}
     font-weight: 600;
     margin: 0px 0px 4px;
 }
-.statistics-titles{
- color: #1a1919;
+.statistics-titles {
+    color: #1a1919;
     font-size: 15px;
     font-weight: 600;
     margin: 0px 0px 4px;
 }
 
-.rate-percentage{
+.rate-percentage {
     font-weight: 300;
-    text-align:center;
+    text-align: center;
 }
 .details {
     margin-left: 10px;
     text-decoration: underline;
 }
-button{
-background-color: transparent;
+button {
+    background-color: transparent;
     border: none;
-    text-decoration:none !important;
+    text-decoration: none !important;
+}
+.details_del {
+    padding: 10px;
+    float: right;
+    border: 1px solid black;
+    margin-right: 20px;
 }

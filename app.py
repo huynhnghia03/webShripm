@@ -36,7 +36,7 @@ app.config['MYSQL_PASSWORD'] = '12345678'
 app.config['MYSQL_DB'] = 'yolov8shrimp'
 mysql = MySQL(app)
 
-model = my_YoloV8.YOLOv8_ObjectCounter(model_file="best_l_16.pt")
+model = my_YoloV8.YOLOv8_ObjectCounter(model_file="best1686.pt")
 
 
 app.secret_key = os.environ.get("FLASK_SECRET")
@@ -255,6 +255,24 @@ def delete_data():
     CS = mysql.connection.cursor()
     try:
         CS.execute(f"""DELETE FROM history WHERE id = '{id}'""")
+        mysql.connection.commit()
+        CS.close()
+        return jsonify({'success': True})
+    except Exception as e:
+        mysql.connection.rollback()
+        CS.close()
+        return jsonify({'success': False, 'error': str(e)})
+    
+@app.route('/delete_selected_records', methods=['POST'])
+def delete_selected_records():
+    selected_records = request.json
+    if not selected_records:
+        return jsonify({'success': False, 'error': 'No records selected'})
+    CS = mysql.connection.cursor()
+
+    try:
+        for record_id in selected_records:
+            CS.execute(f"""DELETE FROM history WHERE id = '{record_id}'""")
         mysql.connection.commit()
         CS.close()
         return jsonify({'success': True})

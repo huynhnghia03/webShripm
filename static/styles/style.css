@@ -497,3 +497,6 @@ th {
 td {
     border: 1px dashed blue;
 }
+.details_del {
+    float: right;
+}
