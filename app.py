@@ -7,6 +7,7 @@ from authlib.integrations.flask_client import OAuth
 from flask_mysqldb import MySQL
 from flask import send_from_directory
 from datetime import datetime
+from dotenv import load_dotenv
 import my_YoloV8
 import cv2
 import json
@@ -16,6 +17,7 @@ import requests
 
 # from random import random
 # Khởi tạo Flask Server Backend
+load_dotenv()
 app = Flask(__name__)
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif', 'mp4','webp'])
 # Apply Flask CORS
@@ -36,27 +38,17 @@ mysql = MySQL(app)
 
 model = my_YoloV8.YOLOv8_ObjectCounter(model_file="best_l_16.pt")
 
-appConf = {
-    "OAUTH2_CLIENT_ID": "791126823139-piql3f0tr6ig8l0afd2guaro6td57tal.apps.googleusercontent.com",
-    "OAUTH2_CLIENT_SECRET": "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",
-    "OAUTH2_META_URL": "https://accounts.google.com/.well-known/openid-configuration",
-    "FLASK_SECRET": "432dc545-07c7-4470-aba0-818d7a9cf3db",
-    "FLASK_PORT": 5000
-}
 
-app.secret_key = appConf.get("FLASK_SECRET")
+app.secret_key = os.environ.get("FLASK_SECRET")
 
 oauth = OAuth(app)
 # list of google scopes - https://developers.google.com/identity/protocols/oauth2/scopes
 oauth.register(
     "myApp",
-    client_id=appConf.get("OAUTH2_CLIENT_ID"),
-    client_secret=appConf.get("OAUTH2_CLIENT_SECRET"),
-    client_kwargs={
-        "scope": "openid profile email https://www.googleapis.com/auth/user.birthday.read https://www.googleapis.com/auth/user.gender.read",
-        # 'code_challenge_method': 'S256'  # enable PKCE
-    },
-    server_metadata_url=f'{appConf.get("OAUTH2_META_URL")}',
+    client_id=os.environ.get("OAUTH2_CLIENT_ID"),
+    client_secret=os.environ.get("OAUTH2_CLIENT_SECRET"),
+    client_kwargs=os.environ.get("SCOPE"),
+    server_metadata_url=f'{os.environ.get("OAUTH2_META_URL")}',
 )
 
 
@@ -491,6 +483,6 @@ def color():
 def random_color():
     return tuple(random.randint(0, 255) for _ in range(3))
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=appConf.get(
+    app.run(host="0.0.0.0", port=os.environ.get(
         "FLASK_PORT"), debug=True)
 
