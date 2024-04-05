@@ -44,8 +44,7 @@ function drawChart() {
     chart.draw(data, options);
 }
 
-// xu ly xo anh
-// Lấy các phần tử cần thiết
+/*------------------------- Hiển thị detail ---------------------------------*/
 var modal = document.getElementById('myModal');
 var span = document.getElementsByClassName('close')[0];
 
@@ -176,7 +175,7 @@ function deleteSelected() {
         });
 }
 //----------------------------------------------------------------------------------------------
-// xu ly phan khac
+// xu ly phan delete mot record
 
 function deleteData(id) {
     const swalWithBootstrapButtons = Swal.mixin({
@@ -225,3 +224,68 @@ function deleteData(id) {
             }
         });
 }
+
+/*--------------------- phan trang ------------------*/
+document.addEventListener('DOMContentLoaded', function () {
+    const historyDetails = document.querySelectorAll('.history-details');
+    const prevPageButton = document.getElementById('prevPage');
+    const nextPageButton = document.getElementById('nextPage');
+    const pageNumberButtons = document.querySelectorAll('.pageNumber');
+    const itemsPerPage = 5;
+    let currentPage = 1;
+
+    function displayCurrentPage() {
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+        historyDetails.forEach(function (detail, index) {
+            console.log(detail, '--- ', index);
+            if (index >= startIndex && index < endIndex) {
+                detail.style.display = 'block';
+            } else {
+                detail.style.display = 'none';
+            }
+        });
+    }
+
+    prevPageButton.addEventListener('click', function (event) {
+        event.preventDefault();
+        if (currentPage > 1) {
+            currentPage--;
+            displayCurrentPage();
+            updatePaginationButtons();
+        }
+    });
+
+    nextPageButton.addEventListener('click', function (event) {
+        event.preventDefault();
+        const totalPages = Math.ceil(historyDetails.length / itemsPerPage);
+        if (currentPage < totalPages) {
+            currentPage++;
+            displayCurrentPage();
+            updatePaginationButtons();
+        }
+    });
+
+    pageNumberButtons.forEach(function (button) {
+        button.addEventListener('click', function (event) {
+            event.preventDefault();
+
+            currentPage = parseInt(this.textContent);
+            console.log(currentPage);
+            displayCurrentPage();
+            updatePaginationButtons();
+        });
+    });
+
+    function updatePaginationButtons() {
+        pageNumberButtons.forEach(function (button) {
+            button.classList.remove('active');
+            if (parseInt(button.textContent) === currentPage) {
+                button.classList.add('active');
+            }
+        });
+    }
+
+    displayCurrentPage();
+    updatePaginationButtons();
+});
