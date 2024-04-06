@@ -170,7 +170,7 @@
                                     </div>
                                     <button
                                         class="statistics-titles details"
-                                        onclick="openModal('{{row[1]}}','{{row[2]}}', '{{row[3]}}','{{row[4]}}')">
+                                        onclick="openModal('{{row[0]}}','{{row[1]}}','{{row[2]}}', '{{row[3]}}','{{row[4]}}')">
                                         Details
                                     </button>
                                     <button
@@ -187,8 +187,8 @@
                                         value="{{row[0]}}" />
                                     <!-- Thanh details-->
 
-                                    <div id="myModal" class="modal">
-                                        <span class="close">&times;</span>
+                                    <div id="{{row[0]}}" class="modal">
+                                        <span class="close" id="close{{row[0]}}" onclick="closeModel()">&times;</span>
                                         <div class="model_con">
                                             <img
                                                 src="/static/yolov8/{{row[1]}}"
@@ -234,18 +234,15 @@
                         </div>
                     </div>
                     {% endfor %}
+                     <div class="pagination" id="pagination">
+                        <button id="prevPage">&laquo; Previous</button>
+                        <button class="pageNumber">1</button>
+                        <button class="pageNumber">2</button>
+                        <button class="pageNumber">3</button>
+                        <button id="nextPage">Next &raquo;</button>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="page" style="text-align: center">
-            <a href="#">&laquo;</a>
-            <a href="#">1</a>
-            <a href="#" class="active">2</a>
-            <a href="#">3</a>
-            <a href="#">4</a>
-            <a href="#">5</a>
-            <a href="#">6</a>
-            <a href="#">&raquo;</a>
         </div>
     </div>
     {% else %}

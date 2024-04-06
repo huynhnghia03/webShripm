@@ -17,13 +17,6 @@ if (event.target.files.length>0) {
             console.log("ook",event.target.files.length>0)
             if (event.target.files.length>0) {
                 e.preventDefault();
-                console.log();
-                $('#displayedImage').hide();
-                $('#targetLayer').hide();
-
-                    document.getElementById('process_img').style.backgroundColor="#676767"
-                 document.getElementById('loader').style.display = 'inline';
-
                 handleFiles(event.target.files);
                 }
             });
@@ -62,6 +55,12 @@ function move() {
 }
 function downloadImage() {
     var imageURL = document.getElementById('imageURL').value;
+    if(imageURL){
+     $('#displayedImage').hide();
+      $('#targetLayer').hide();
+    document.getElementById('process_img').style.backgroundColor="#676767"
+                 document.getElementById('loader').style.display = 'inline';
+
     document.getElementById('inferenceJson').innerHTML = '';
     fetch('/download', {
         method: 'POST',
@@ -73,6 +72,8 @@ function downloadImage() {
         .then((response) => response.json())
         .then((data) => {
             if (data.success) {
+             document.getElementById('process_img').style.backgroundColor="transparent"
+                 document.getElementById('loader').style.display = 'none';
                 document.getElementById('targetLayer').style.display = 'block';
                 document.getElementById('targetLayer').innerHTML =
                     data.htmlresponse;
@@ -91,6 +92,7 @@ function downloadImage() {
             console.error('Error:', error);
             alert('An unexpected error occurred.');
         });
+        }
 }
 
 function dropHandler(event) {
@@ -116,7 +118,12 @@ function handleFiles(files) {
     for (var i = 0; i < files.length; i++) {
         formData.append('uploadFile[]', files[i]);
     }
-    console.log(formData,files)
+     $('#displayedImage').hide();
+                $('#targetLayer').hide();
+
+                    document.getElementById('process_img').style.backgroundColor="#676767"
+                 document.getElementById('loader').style.display = 'inline';
+
     fetch('/classify', {
         method: 'POST',
         body: formData,

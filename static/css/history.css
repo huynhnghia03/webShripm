@@ -174,4 +174,31 @@ button {
     float: right;
     border: 1px solid black;
     margin-right: 20px;
+    margin-top: 10px;
+    border-radius: 10px;
 }
+/* CSS cho phân trang */
+    .pagination {
+        margin: 20px 0;
+        text-align: center;
+    }
+
+    .pagination button {
+        display: inline-block;
+        padding: 5px 10px;
+        margin: 0 5px;
+        background-color: #f2f2f2;
+        border: 1px solid #ddd;
+        color: black;
+        text-decoration: none;
+        border-radius: 3px;
+    }
+
+    .pagination button.active {
+        background-color: #666;
+        color: white;
+    }
+
+    .pagination button:hover:not(.active) {
+        background-color: #ddd;
+    }

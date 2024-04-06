@@ -47,7 +47,7 @@ oauth.register(
     "myApp",
     client_id=os.environ.get("OAUTH2_CLIENT_ID"),
     client_secret=os.environ.get("OAUTH2_CLIENT_SECRET"),
-    client_kwargs=os.environ.get("SCOPE"),
+    client_kwargs={"scope":os.environ.get("SCOPE")},
     server_metadata_url=f'{os.environ.get("OAUTH2_META_URL")}',
 )
 

@@ -46,11 +46,12 @@ function drawChart() {
 
 // xu ly xo anh
 // Lấy các phần tử cần thiết
-var modal = document.getElementById('myModal');
-var span = document.getElementsByClassName('close')[0];
+var modal
+var span
 
-function openModal(imageSrc, rs, total, time) {
-    var modal = document.getElementById('myModal');
+function openModal(id,imageSrc, rs, total, time) {
+    modal = document.getElementById(id);
+    span=document.getElementById('close'+id);
     var modalImg = document.getElementById('img01');
     var res = document.getElementById('results_text');
     var tot = document.getElementById('total_text');
@@ -63,9 +64,9 @@ function openModal(imageSrc, rs, total, time) {
     timeText.textContent = ' ' + time;
 }
 
-span.onclick = function () {
+function closeModel () {
     modal.style.display = 'none';
-};
+}
 
 window.onclick = function (event) {
     if (event.target == modal) {
@@ -225,3 +226,84 @@ function deleteData(id) {
             }
         });
 }
+/*--------------------- phan trang ------------------*/
+document.addEventListener('DOMContentLoaded', function () {
+    const itemsPerPage = 5;
+    let currentPage = 1;
+    let startIndex = (currentPage - 1) * itemsPerPage;
+    let endIndex = startIndex + itemsPerPage;
+    const historyDetails = document.querySelectorAll('.history-details');
+    content=''
+    if(historyDetails.length>5){
+    console.log("no")
+    content+='<button id="prevPage">&laquo; Previous</button>'
+    for(var page=0; page<Math.ceil(historyDetails.length / itemsPerPage); page++){
+    content+='<button class="pageNumber">'+(page+1)+'</button>'
+    }
+    content+='<button id="nextPage">Next &raquo;</button>'
+    }else{
+    console.log("ok")
+   content ='<button class="pageNumber">1</button>'
+    }
+    document.getElementById('pagination').innerHTML=content
+    const prevPageButton = document.getElementById('prevPage');
+    const nextPageButton = document.getElementById('nextPage');
+    const pageNumberButtons = document.querySelectorAll('.pageNumber');
+
+
+    function displayCurrentPage() {
+        console.log(historyDetails)
+        startIndex=(currentPage - 1) * itemsPerPage;
+        endIndex = startIndex + itemsPerPage
+        historyDetails.forEach(function (detail, index) {
+            if (index >= startIndex && index < endIndex) {
+                detail.style.display = 'block';
+            } else {
+            console.log(detail, '--- ', index,startIndex,endIndex);
+                detail.style.display = 'none';
+            }
+        });
+    }
+
+if(prevPageButton) {   prevPageButton.addEventListener('click', function (event) {
+        event.preventDefault();
+        if (currentPage > 1) {
+            currentPage--;
+            displayCurrentPage();
+            updatePaginationButtons();
+        }
+    });
+    }
+
+    if(prevPageButton){nextPageButton.addEventListener('click', function (event) {
+        event.preventDefault();
+        const totalPages = Math.ceil(historyDetails.length / itemsPerPage);
+        if (currentPage < totalPages) {
+            currentPage++;
+            displayCurrentPage();
+            updatePaginationButtons();
+        }
+    });
+}
+    pageNumberButtons.forEach(function (button) {
+        button.addEventListener('click', function (event) {
+            event.preventDefault();
+            currentPage = parseInt(this.textContent);
+            console.log(currentPage);
+            displayCurrentPage();
+            updatePaginationButtons();
+        });
+    });
+
+    function updatePaginationButtons() {
+        pageNumberButtons.forEach(function (button) {
+            button.classList.remove('active');
+            if (parseInt(button.textContent) === currentPage) {
+                button.classList.add('active');
+            }
+        });
+    }
+
+    displayCurrentPage();
+    updatePaginationButtons();
+});
