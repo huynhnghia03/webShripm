@@ -43,17 +43,11 @@ function drawChart() {
     );
     chart.draw(data, options);
 }
-
-<<<<<<< HEAD
 // xu ly xo anh
 // Lấy các phần tử cần thiết
 var modal
 var span
-=======
-/*------------------------- Hiển thị detail ---------------------------------*/
-var modal = document.getElementById('myModal');
-var span = document.getElementsByClassName('close')[0];
->>>>>>> c565ee34ae91fdd0ee530f87c83209b18dce354d
+
 
 function openModal(id,imageSrc, rs, total, time) {
     modal = document.getElementById(id);
@@ -232,7 +226,6 @@ function deleteData(id) {
             }
         });
 }
-<<<<<<< HEAD
 /*--------------------- phan trang ------------------*/
 document.addEventListener('DOMContentLoaded', function () {
     const itemsPerPage = 5;
@@ -266,37 +259,13 @@ document.addEventListener('DOMContentLoaded', function () {
             if (index >= startIndex && index < endIndex) {
                 detail.style.display = 'block';
             } else {
+            detail.style.display = 'none';
             console.log(detail, '--- ', index,startIndex,endIndex);
-=======
-
-/*--------------------- phan trang ------------------*/
-document.addEventListener('DOMContentLoaded', function () {
-    const historyDetails = document.querySelectorAll('.history-details');
-    const prevPageButton = document.getElementById('prevPage');
-    const nextPageButton = document.getElementById('nextPage');
-    const pageNumberButtons = document.querySelectorAll('.pageNumber');
-    const itemsPerPage = 5;
-    let currentPage = 1;
-
-    function displayCurrentPage() {
-        const startIndex = (currentPage - 1) * itemsPerPage;
-        const endIndex = startIndex + itemsPerPage;
-        historyDetails.forEach(function (detail, index) {
-            console.log(detail, '--- ', index);
-            if (index >= startIndex && index < endIndex) {
-                detail.style.display = 'block';
-            } else {
->>>>>>> c565ee34ae91fdd0ee530f87c83209b18dce354d
-                detail.style.display = 'none';
-            }
-        });
+        }
+    })
     }
 
-<<<<<<< HEAD
 if(prevPageButton) {   prevPageButton.addEventListener('click', function (event) {
-=======
-    prevPageButton.addEventListener('click', function (event) {
->>>>>>> c565ee34ae91fdd0ee530f87c83209b18dce354d
         event.preventDefault();
         if (currentPage > 1) {
             currentPage--;
@@ -304,14 +273,10 @@ if(prevPageButton) {   prevPageButton.addEventListener('click', function (event)
             updatePaginationButtons();
         }
     });
-<<<<<<< HEAD
     }
 
-    if(prevPageButton){nextPageButton.addEventListener('click', function (event) {
-=======
-
+    if(prevPageButton){
     nextPageButton.addEventListener('click', function (event) {
->>>>>>> c565ee34ae91fdd0ee530f87c83209b18dce354d
         event.preventDefault();
         const totalPages = Math.ceil(historyDetails.length / itemsPerPage);
         if (currentPage < totalPages) {
@@ -320,18 +285,10 @@ if(prevPageButton) {   prevPageButton.addEventListener('click', function (event)
             updatePaginationButtons();
         }
     });
-<<<<<<< HEAD
 }
     pageNumberButtons.forEach(function (button) {
         button.addEventListener('click', function (event) {
             event.preventDefault();
-=======
-
-    pageNumberButtons.forEach(function (button) {
-        button.addEventListener('click', function (event) {
-            event.preventDefault();
-
->>>>>>> c565ee34ae91fdd0ee530f87c83209b18dce354d
             currentPage = parseInt(this.textContent);
             console.log(currentPage);
             displayCurrentPage();
@@ -350,8 +307,4 @@ if(prevPageButton) {   prevPageButton.addEventListener('click', function (event)
 
     displayCurrentPage();
     updatePaginationButtons();
-<<<<<<< HEAD
 });
-=======
-});
->>>>>>> c565ee34ae91fdd0ee530f87c83209b18dce354d

@@ -177,21 +177,13 @@ button {
     margin-top: 10px;
     border-radius: 10px;
 }
-<<<<<<< HEAD
-=======
 
->>>>>>> c565ee34ae91fdd0ee530f87c83209b18dce354d
 /* CSS cho phân trang */
     .pagination {
         margin: 20px 0;
         text-align: center;
     }
-
-<<<<<<< HEAD
     .pagination button {
-=======
-    .pagination a {
->>>>>>> c565ee34ae91fdd0ee530f87c83209b18dce354d
         display: inline-block;
         padding: 5px 10px;
         margin: 0 5px;
@@ -201,20 +193,10 @@ button {
         text-decoration: none;
         border-radius: 3px;
     }
-
-<<<<<<< HEAD
     .pagination button.active {
-=======
-    .pagination a.active {
->>>>>>> c565ee34ae91fdd0ee530f87c83209b18dce354d
         background-color: #666;
         color: white;
     }
-
-<<<<<<< HEAD
     .pagination button:hover:not(.active) {
-=======
-    .pagination a:hover:not(.active) {
->>>>>>> c565ee34ae91fdd0ee530f87c83209b18dce354d
         background-color: #ddd;
     }
