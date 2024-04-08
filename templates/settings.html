@@ -31,9 +31,11 @@
                                     class="d-block ui-w-80">
 
                                 <div class="media-body ml-4">
+                                    <input type="text" name="temp" value="{{ session[2] }}" hidden>
                                     <label class="btn btn-outline-primary">
                                         Upload new photo
-                                        <input type="file" class="account-settings-fileinput" name="current_avatar" value="{{ session[2] }}" accept=".jpg, .png, .mp4">
+
+                                        <input type="file" class="account-settings-fileinput" name="current_avatar" accept=".jpg, .png, .mp4">
                                     </label> &nbsp;
 
                                 </div>

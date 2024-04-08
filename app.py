@@ -457,10 +457,13 @@ def change_username():
         print(current_username)
         print(current_avatar)
         filename = secure_filename(current_avatar.filename)
-        path_save = os.path.join(app.config['UPLOAD_FOLDER'] + "/upload/users/", filename)
-        current_avatar.save(path_save)
+        if(filename):
+            path_save = os.path.join(app.config['UPLOAD_FOLDER'] + "/upload/users/", filename)
+            current_avatar.save(path_save)
+        else:
+            path_save = request.form['temp']
         email = session['user']['email']
-        print(email)
+        print(path_save)
         cur = mysql.connection.cursor()
         cur.execute(f"SELECT username FROM user WHERE email = '{email}'")
         user_data = cur.fetchone()
