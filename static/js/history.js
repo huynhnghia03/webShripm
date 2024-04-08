@@ -36,7 +36,6 @@ function drawChart() {
         },
         height: 600,
     };
-
     // Display the chart inside the <div> element with id="piechart"
     var chart = new google.visualization.PieChart(
         document.getElementById('piechart')
@@ -47,7 +46,6 @@ function drawChart() {
 // Lấy các phần tử cần thiết
 var modal
 var span
-
 
 function openModal(id,imageSrc, rs, total, time) {
     modal = document.getElementById(id);
@@ -250,7 +248,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const nextPageButton = document.getElementById('nextPage');
     const pageNumberButtons = document.querySelectorAll('.pageNumber');
 
-
     function displayCurrentPage() {
         console.log(historyDetails)
         startIndex=(currentPage - 1) * itemsPerPage;
@@ -265,7 +262,8 @@ document.addEventListener('DOMContentLoaded', function () {
     })
     }
 
-if(prevPageButton) {   prevPageButton.addEventListener('click', function (event) {
+if(prevPageButton) {
+prevPageButton.addEventListener('click', function (event) {
         event.preventDefault();
         if (currentPage > 1) {
             currentPage--;

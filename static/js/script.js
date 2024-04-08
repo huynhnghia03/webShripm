@@ -3,25 +3,34 @@ let labels = ['BigShrimp', 'MediumShrimp', 'SmallShrimp'];
 
 $(document).ready(function () {
 
-if (!$('#uploadFile').val() ) {
-        $('#uploadImage').submit(function (e) {
-                e.preventDefault();
-                })
-}
-    $('#uploadFile').change(function (event) {
-        $('#inferenceJson').empty().append('');
-
-if (event.target.files.length>0) {
-            $('#uploadImage').submit(function (e) {
-
-            console.log("ook",event.target.files.length>0)
-            if (event.target.files.length>0) {
-                e.preventDefault();
-                handleFiles(event.target.files);
-                }
-            });
-
- }
+//if (!$('#uploadFile').val() ) {
+//        $('#uploadImage').submit(function (e) {
+//                e.preventDefault();
+//                })
+//}
+//    $('#uploadFile').change(function (event) {
+//        $('#inferenceJson').empty().append('');
+//
+//if (event.target.files.length>0) {
+//            $('#uploadImage').submit(function (e) {
+//
+//            console.log("ook",event.target.files.length>0)
+//            if (event.target.files.length>0) {
+//                e.preventDefault();
+//                handleFiles(event.target.files);
+//                }
+//            });
+//
+// }
+//    });
+$('#uploadImage').submit(function (e) {
+        e.preventDefault(); // Prevent form submission by default
+        var files = $('#uploadFile')[0].files; // Get selected files
+        if (files.length > 0) {
+            handleFiles(files); // If files are selected, handle them
+        } else {
+            alert('Please select a file.'); // If no file is selected, alert the user
+        }
     });
 
 });
@@ -92,6 +101,8 @@ function downloadImage() {
             console.error('Error:', error);
             alert('An unexpected error occurred.');
         });
+        }else{
+        alert('Please paste a link.');
         }
 }
 
@@ -118,6 +129,8 @@ function handleFiles(files) {
     for (var i = 0; i < files.length; i++) {
         formData.append('uploadFile[]', files[i]);
     }
+    console.log(formData)
+    if(formData){
      $('#displayedImage').hide();
                 $('#targetLayer').hide();
 
@@ -132,7 +145,7 @@ function handleFiles(files) {
         .then((data) => {
             if (data.success) {
                 formData = new FormData();
-                document.getElementById('uploadFile').value = '';
+               document.getElementById('uploadFile').value = '';
                 document.getElementById('displayedImage').style.display =
                     'none';
                 document.getElementById('targetLayer').style.display = 'block';
@@ -175,6 +188,7 @@ function handleFiles(files) {
             console.error('Error:', error);
             alert('An unexpected error occurred.');
         });
+        }
         }
 }
 
