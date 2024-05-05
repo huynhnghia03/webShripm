@@ -419,12 +419,30 @@ const renderBoxes = (
     )}px Arial`;
     ctx.font = font;
     ctx.textBaseline = 'top';
+console.log("start")
+dictObject = {}
+dictObject["SumShrimp"] = 0
 
+for (let i = 0; i < classes_data.length; ++i) {
+console.log(labels[classes_data[i]])
+ dictObject["SumShrimp"] += 1
+                if (labels[classes_data[i]] in dictObject){
+                    dictObject[labels[classes_data[i]]]+=1
+
+                }else
+                    dictObject[labels[classes_data[i]]] = 1
+}
+console.log(dictObject)
+document.getElementById('inferenceJson').innerHTML =  "<pre class='jsonOutput'>" +JSON.stringify({ Video1: dictObject },null,
+                    2)  +'</pre>'
+console.log("end")
     for (let i = 0; i < scores_data.length; ++i) {
         // filter based on class threshold
         const klass = labels[classes_data[i]];
+
         const color = colors.get(classes_data[i]);
         const score = (scores_data[i] * 100).toFixed(1);
+
         let [y1, x1, y2, x2] = boxes_data.slice(i * 4, (i + 1) * 4);
         x1 *= ratios[0];
         x2 *= ratios[0];

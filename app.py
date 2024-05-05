@@ -401,6 +401,17 @@ def download():
             # If there are positive results, count objects and save the image
             if len(results) > 0:
                 dictObject, save_name = model.count_object(results, upload_folder, result_img)
+                filtered_dict = {k: v for k, v in dictObject.items() if k != 'SumShrimp'}
+                key = json.dumps(filtered_dict)
+                current_time = datetime.now()
+                cur = mysql.connection.cursor()
+                sumShrimp = dictObject['SumShrimp']
+                email = session['user']['email']
+
+                cur.execute(f"""INSERT INTO history (shrimp_image,shrimp_kind, shrimp_total, c_time, email) 
+                                        VALUES ('{save_name}','{key}','{sumShrimp}','{current_time}','{email}')""")
+                mysql.connection.commit()
+                cur.close()
                 msg = 'File predict successfully'
                 print(f"Saved result image to: {save_name}")
                 return jsonify({'success': True,  "Info": dictObject,
